@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Author Details</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>{{ author.name }}</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Biography</h2>
+            <p>{{ author.biography }}</p>
+        </section>
+        <section>
+            <h2>Books by {{ author.name }}</h2>
+            <ul>
+                {% for book in author.books %}
+                    <li>{{ book.title }} ({{ book.published_date }})</li>
+                {% endfor %}
+            </ul>
+        </section>
+    </main>
+</body>
+</html>
