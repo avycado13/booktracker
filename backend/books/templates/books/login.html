@@ -1,0 +1,43 @@
+{% extends "books/base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title text-center mb-4">Login</h2>
+                
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" name="username" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+
+                    {% if messages %}
+                    <div class="alert alert-danger">
+                        {% for message in messages %}
+                            {{ message }}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    
+                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                </form>
+                
+                <div class="text-center mt-3">
+                    <a href="{% url 'books:register' %}">Don't have an account? Register</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

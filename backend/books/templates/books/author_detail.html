@@ -1,0 +1,33 @@
+{% extends "books/base.html" %}
+
+{% block title %}{{ author.name }}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="card-title text-center mb-4">{{ author.name }}</h1>
+                
+                <section>
+                    <h2>Biography</h2>
+                    <p>{{ author.bio }}</p>
+                </section>
+                
+                <section>
+                    <h2>Books by {{ author.name }}</h2>
+                    <ul class="list-group">
+                        {% for book in books %}
+                            <li class="list-group-item">
+                                <a href="{% url 'books:book_detail' book.id %}">{{ book.title }}</a> ({{ book.publication_date }})
+                            </li>
+                        {% empty %}
+                            <li class="list-group-item">No books available.</li>
+                        {% endfor %}
+                    </ul>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

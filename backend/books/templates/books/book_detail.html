@@ -1,0 +1,29 @@
+{% extends "books/base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <h1>{{ book.title }}</h1>
+        <p><strong>Author:</strong> {{ book.author }}</p>
+        <p><strong>Published Date:</strong> {{ book.published_date }}</p>
+        <p><strong>ISBN:</strong> {{ book.isbn }}</p>
+        <p><strong>Summary:</strong> {{ book.summary }}</p>
+        <a href="{% url 'books:index' %}">Back to Book List</a>
+    </div>
+    <div>
+        <h2>Author Details</h2>
+        <p><strong>Name:</strong> {{ author.name }}</p>
+        <p><strong>Biography:</strong> {{ book.author.bio }}</p>
+        <a href="{% url 'books:author_detail' book.author.id %}">View Author Details</a>
+    </div>
+    <div>
+        <h2>Reviews</h2>
+        <ul>
+            {% for review in reviews %}
+                <li>{{ review.comment }} - <strong>{{ review.rating }}</strong></li>
+            {% empty %}
+                <li>No reviews yet.</li>
+            {% endfor %}
+        </ul>
+{% endblock %}
