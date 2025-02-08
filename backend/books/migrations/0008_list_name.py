@@ -4,16 +4,15 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('books', '0007_remove_shelf_name_list_delete_readbook'),
+        ("books", "0007_remove_shelf_name_list_delete_readbook"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='list',
-            name='name',
-            field=models.CharField(default='blah', max_length=255),
+            model_name="list",
+            name="name",
+            field=models.CharField(default="blah", max_length=255),
             preserve_default=False,
         ),
     ]

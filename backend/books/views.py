@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Book, Author, Shelf, List
+from .models import Media, Author, Shelf, List
 from django.contrib.auth.models import Group, User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from rest_framework import permissions, viewsets
 from .serializers import (
-    BookSerializer,
+    MediaSerializer,
     AuthorSerializer,
     UserSerializer,
     GroupSerializer,
@@ -13,40 +13,50 @@ from .serializers import (
 from django.contrib.auth.decorators import login_required
 
 
-
 # Create your views here.
 @login_required
 def index(request):
     shelves = request.user.shelves.all()
-    books = Book.objects.all()
+    books = Media.objects.all()
     books_read = [books for book in books if book.is_read_by(request.user)]
     list_read = List.objects.filter(user=request.user, name="Read Books").first()
-    context = {"books": books,"shelves":shelves,"user": request.user, "books_read":list_read.books.all()}
+    context = {
+        "books": books,
+        "shelves": shelves,
+        "user": request.user,
+        "books_read": list_read.books.all(),
+    }
     return render(request, "books/index.html", context)
 
 
 def book_detail(request, book_id):
-    book = get_object_or_404(Book, pk=book_id)
-    context = {"book": book, "author": book.author, "reviews": book.reviews.all(),"user": request.user}
+    book = get_object_or_404(Media, pk=book_id)
+    context = {
+        "book": book,
+        "author": book.author,
+        "reviews": book.reviews.all(),
+        "user": request.user,
+    }
     return render(request, "books/book_detail.html", context)
 
 
 def author_detail(request, author_id):
     author = get_object_or_404(Author, pk=author_id)
-    context = {"author": author, "books": author.books.all(),"user": request.user}
+    context = {"author": author, "books": author.books.all(), "user": request.user}
     return render(request, "books/author_detail.html", context)
 
+
 def add_to_shelf(request, book_id, shelf_id):
-    book = get_object_or_404(Book, pk=book_id)
+    book = get_object_or_404(Media, pk=book_id)
     shelf = get_object_or_404(Shelf, pk=shelf_id)
     shelf.books.add(book)
     return redirect("book_detail", book_id=book_id)
 
+
 def mark_as_read(request, book_id):
-    book = get_object_or_404(Book, pk=book_id)
+    book = get_object_or_404(Media, pk=book_id)
     book.mark_as_read(request.user)
     return redirect("index", book_id=book_id)
-
 
 
 # Define a view function for the login page
@@ -137,8 +147,8 @@ class BookViewSet(viewsets.ModelViewSet):
     API endpoint that allows books to be viewed or edited.
     """
 
-    queryset = Book.objects.all().order_by("title")
-    serializer_class = BookSerializer
+    queryset = Media.objects.all().order_by("title")
+    serializer_class = MediaSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 

@@ -1,5 +1,5 @@
 from django.contrib.auth.models import Group, User
-from .models import Book, Author
+from .models import Media, Author
 from rest_framework import serializers
 
 
@@ -15,9 +15,9 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         fields = ["url", "name"]
 
 
-class BookSerializer(serializers.HyperlinkedModelSerializer):
+class MediaSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Book
+        model = Media
         fields = ["title", "author", "isbn", "publication_date", "pages"]
 
 

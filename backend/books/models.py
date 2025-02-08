@@ -12,13 +12,13 @@ class Author(models.Model):
         return self.name
 
 
-class Book(models.Model):
+class Media(models.Model):
     title = models.CharField(max_length=100)
     author = models.ForeignKey(Author, related_name="books", on_delete=models.CASCADE)
     publication_date = models.DateField()
     isbn = models.CharField(max_length=13, unique=True)
     pages = models.IntegerField()
-    cover_image = models.ImageField(upload_to="covers/", blank=True)
+    cover_image = models.ImageField(upload_to="covers/")
     summary = models.TextField(blank=True)
 
     def __str__(self):
@@ -52,7 +52,7 @@ class Book(models.Model):
 
 
 class Review(models.Model):
-    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="reviews")
+    book = models.ForeignKey(Media, on_delete=models.CASCADE, related_name="reviews")
     rating = models.IntegerField(
         validators=[MinValueValidator(1), MaxValueValidator(5)]
     )
@@ -66,7 +66,7 @@ class Review(models.Model):
 class Shelf(models.Model):
     name = models.CharField(max_length=255)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="shelves")
-    books = models.ManyToManyField(Book, related_name="shelves")  # Fixed redundant definition
+    books = models.ManyToManyField(Media, related_name="shelves")  # Fixed redundant definition
 
     def __str__(self):
         return f"{self.name} ({self.user.username})"
@@ -75,7 +75,7 @@ class Shelf(models.Model):
 class List(models.Model):
     name = models.CharField(max_length=255)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="lists")
-    books = models.ManyToManyField(Book, related_name="lists")  # Fixed redundant definition
+    books = models.ManyToManyField(Media, related_name="lists")  # Fixed redundant definition
 
     def __str__(self):
         return f"{self.name} ({self.user.username})"

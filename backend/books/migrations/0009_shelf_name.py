@@ -4,16 +4,15 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('books', '0008_list_name'),
+        ("books", "0008_list_name"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='shelf',
-            name='name',
-            field=models.CharField(default='test', max_length=255),
+            model_name="shelf",
+            name="name",
+            field=models.CharField(default="test", max_length=255),
             preserve_default=False,
         ),
     ]

@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-aycdve_o-=cg0@=hoa-+s2a-oidu-nk8ify@8*p5g15#f3iu7m
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS: list[str] = ["avys-mac.local","127.0.0.1"]
+ALLOWED_HOSTS: list[str] = ["avys-mac.local", "127.0.0.1"]
 
 
 # Application definition
